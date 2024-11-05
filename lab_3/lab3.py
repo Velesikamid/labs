@@ -22,8 +22,7 @@ def parse_arguments() -> argparse.Namespace:
     args = parser.parse_args()
 
     if not os.path.exists(args.input_path):
-        print("Error: Input file not found.")
-        exit(1)
+        raise Exception("Error: Input file not found.")
 
     return args
 
@@ -32,19 +31,20 @@ def main() -> None:
     """
     Perform image processing operations based on command-line arguments.
     """
-    args = parse_arguments()
-    processor = image_processor.ImageProcessor(
-        args.input_path,
-        args.output_path
-    )
+    try:
+        args = parse_arguments()
+        input_path, output_path = args.input_path, args.output_path
 
-    if processor.load_image():
-        processor.display_image_info()
-        processor.plot_histogram()
-        processor.convert_to_grayscale()
-        processor.save_grayscale_image()
-        processor.display_images()
+        image = image_processor.load_image(input_path)
+        if image is not None:
+            image_processor.display_image_info(image)
+            image_processor.plot_histogram(image)
+            gray_image = image_processor.convert_to_grayscale(image)
+            image_processor.save_grayscale_image(gray_image, output_path)
+            image_processor.display_images(image, gray_image)
+    except Exception as e:
+        print(e)
 
 
 if __name__ == "__main__":
-    main()
+    main()   
