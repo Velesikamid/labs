@@ -11,9 +11,10 @@ def make_df(annotation_file: str) -> pd.DataFrame:
     :raises Exception: If the annotation file cannot be read.
     """
     try:
-        df = pd.read_csv(annotation_file)
-        df.columns(["absolute_path", "relative_path"])
-    except Exception:
+        df = pd.read_csv(annotation_file, names=["absolute_path", "relative_path"], skiprows=[0])
+        #df.columns(["absolute_path", "relative_path"])
+    except Exception as e:
+        print(e)
         raise Exception("The annotation could not be read!")
 
     return df
@@ -40,7 +41,8 @@ def add_image_dimensions(df: pd.DataFrame) -> pd.DataFrame:
                 heights.append(None)
                 widths.append(None)
                 depths.append(None)
-    except Exception:
+    except Exception as e:
+        print(e)
         raise Exception("The images have not been opened!"
                         " It is impossible to determine"
                         " their characteristics!")

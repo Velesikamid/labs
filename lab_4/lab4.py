@@ -45,6 +45,7 @@ def main() -> None:
         annotation_file = args.annotation_path
 
         df = df_processor.make_df(annotation_file)
+        print(df)
 
         df = df_processor.add_image_dimensions(df)
 
