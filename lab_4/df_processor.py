@@ -2,6 +2,7 @@ import cv2
 import matplotlib.pyplot as plt
 import pandas as pd
 
+
 def make_df(annotation_file: str) -> pd.DataFrame:
     """
     Reads the annotation file and creates a DataFrame.
