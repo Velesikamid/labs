@@ -48,4 +48,3 @@ class ImageIterator:
             return self.images[self.counter - 1]
         else:
             raise StopIteration
-
